@@ -1,0 +1,1125 @@
+<SplashScreen>:
+    canvas.before:
+        Color:
+            # Затемняем фон сплэш-скрина, если включен ночной режим
+            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture
+    FloatLayout:
+        Image:
+            id: logo_img
+            source: 'logo.jpg'
+            size_hint: (0.5, 0.5)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            opacity: 0
+        Label:
+            text: root.loading_text
+            font_size: '26sp'
+            bold: True
+            # Текст становится светлым в темном режиме
+            color: (0.9, 0.9, 0.9, 1) if app.dark_mode else (0.05, 0.1, 0.3, 1)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+
+<RegisterScreen>:
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [0, 0, 0, 20]
+        
+        BoxLayout:
+            size_hint_y: None
+            height: 150
+            canvas.before:
+                Color:
+                    # Шапка становится темнее
+                    rgba: (0.05, 0.1, 0.3, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, 40, 40]
+            Label:
+                text: "РЕГИСТРАЦИЯ"
+                font_size: '22sp'
+                bold: True
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [30, 10, 30, 10]
+            spacing: 10
+
+            TextInput:
+                id: name_input
+                hint_text: "Имя"
+                size_hint_y: None
+                height: 45
+                multiline: False
+                background_color: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                foreground_color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+            
+            TextInput:
+                id: surname_input
+                hint_text: "Фамилия"
+                size_hint_y: None
+                height: 45
+                multiline: False
+                background_color: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                foreground_color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+
+            Label:
+                text: "Дата рождения:"
+                color: (0.8, 0.8, 0.8, 1) if app.dark_mode else (0.1, 0.2, 0.4, 1)
+                size_hint_y: None
+                height: 25
+                bold: True
+
+            FloatLayout:
+                size_hint_y: None
+                height: 120
+                Label:
+                    text: "»"
+                    font_size: '30sp'
+                    color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                    pos_hint: {'center_x': 0.2, 'center_y': 0.5}
+                BoxLayout:
+                    size_hint_x: 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    spacing: 2
+                    FixedWheel:
+                        BoxLayout:
+                            id: d_cont
+                            orientation: 'vertical'
+                            size_hint_y: None
+                            height: self.minimum_height
+                            padding: [0, 40, 0, 40]
+                    FixedWheel:
+                        BoxLayout:
+                            id: m_cont
+                            orientation: 'vertical'
+                            size_hint_y: None
+                            height: self.minimum_height
+                            padding: [0, 40, 0, 40]
+                    FixedWheel:
+                        BoxLayout:
+                            id: y_cont
+                            orientation: 'vertical'
+                            size_hint_y: None
+                            height: self.minimum_height
+                            padding: [0, 40, 0, 40]
+                Label:
+                    text: "«"
+                    font_size: '30sp'
+                    color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                    pos_hint: {'center_x': 0.8, 'center_y': 0.5}
+
+            BoxLayout:
+                size_hint_y: None
+                height: 45
+                spacing: 10
+                ToggleButton:
+                    text: "МУЖЧИНА"
+                    group: "gender"
+                    state: 'down'
+                ToggleButton:
+                    text: "ЖЕНЩИНА"
+                    group: "gender"
+
+            Widget:
+                size_hint_y: 1
+
+            Button:
+                text: "СОХРАНИТЬ"
+                size_hint_y: None
+                height: 60
+                bold: True
+                background_normal: ''
+                background_color: (0.2, 0.5, 0.7, 1) if app.dark_mode else (0.3, 0.7, 0.9, 1)
+                on_release: root.save_user()
+
+<MenuScreen>:
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture
+
+    BoxLayout:
+        orientation: 'vertical'
+        
+        BoxLayout:
+            size_hint_y: None
+            height: 250
+            padding: 20
+            canvas.before:
+                Color:
+                    rgba: (0.05, 0.1, 0.3, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, 40, 40]
+            Image:
+                source: 'brain.jpg'
+                allow_stretch: True
+
+        Label:
+            text: "ВЫБЕРИ УРОВЕНЬ СЛОЖНОСТИ:"
+            bold: True
+            font_size: '18sp'
+            color: (0.8, 0.8, 1, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+            size_hint_y: None
+            height: 60
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: [20, 10, 20, 20]
+                spacing: 15
+
+                # УРОВЕНЬ №1
+                Button:
+                    size_hint_y: None
+                    height: 100
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    on_release: root.set_difficulty("Easy")
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    FloatLayout:
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: 'rocket.png'
+                            size_hint: (None, None)
+                            size: (60, 60)
+                            pos_hint: {'center_x': 0.2, 'center_y': 0.5}
+                        Label:
+                            text: "[b]СТАРТ:[/b]\nФундамент"
+                            markup: True
+                            color: (1, 1, 1, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+                            font_size: '16sp'
+                            size_hint_x: 0.6
+                            halign: 'left'
+                            pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+
+                # УРОВЕНЬ №2
+                Button:
+                    size_hint_y: None
+                    height: 100
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    on_release: root.set_difficulty("Medium")
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    FloatLayout:
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: 'levels.png'
+                            size_hint: (None, None)
+                            size: (60, 60)
+                            pos_hint: {'center_x': 0.2, 'center_y': 0.5}
+                        Label:
+                            text: "[b]ПРОМЕЖУТОЧНЫЙ:[/b]\nРазвитие"
+                            markup: True
+                            color: (1, 1, 1, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+                            font_size: '16sp'
+                            size_hint_x: 0.6
+                            halign: 'left'
+                            pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+
+                # УРОВЕНЬ №3
+                Button:
+                    size_hint_y: None
+                    height: 100
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    on_release: root.set_difficulty("Hard")
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    FloatLayout:
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: 'diploma.png'
+                            size_hint: (None, None)
+                            size: (60, 60)
+                            pos_hint: {'center_x': 0.2, 'center_y': 0.5}
+                        Label:
+                            text: "[b]ПРОФИ:[/b]\nМастерство"
+                            markup: True
+                            color: (1, 1, 1, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+                            font_size: '16sp'
+                            size_hint_x: 0.6
+                            halign: 'left'
+                            pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+
+<MainDashboard>:
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [0, 0, 0, 10]
+        spacing: 10
+
+        BoxLayout:
+            size_hint_y: None
+            height: 110
+            padding: [20, 10, 20, 10]
+            spacing: 15
+            canvas.before:
+                Color:
+                    rgba: (0.05, 0.1, 0.3, 0.9) if app.dark_mode else (0.1, 0.2, 0.5, 0.9)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Image:
+                source: 'brain_header.png'
+                size_hint: (None, None)
+                size: (80, 80)
+                pos_hint: {'center_y': 0.5}
+
+            Label:
+                text: root.user_name_display
+                font_size: '22sp'
+                bold: True
+                color: (1, 1, 1, 1)
+                halign: 'left'
+                text_size: self.size
+                valign: 'middle'
+
+        ScrollView:
+            do_scroll_x: False
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 15
+                padding: [20, 15, 20, 15]
+
+                # Кнопки меню с адаптивным фоном
+                Button:
+                    on_release: root.manager.current = 'level_map'
+                    size_hint_y: None
+                    height: 110
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25]
+                    BoxLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: [20, 10]
+                        spacing: 20
+                        Image:
+                            source: 'book.png'
+                            size_hint_x: None
+                            width: 65
+                        BoxLayout:
+                            orientation: 'vertical'
+                            Label:
+                                text: "1. УРОКИ"
+                                bold: True
+                                color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                                halign: 'left'
+                                text_size: self.size
+                            Label:
+                                text: "Путь обучения"
+                                color: (0.7, 0.7, 0.7, 1) if app.dark_mode else (0.4, 0.4, 0.4, 1)
+                                halign: 'left'
+                                text_size: self.size
+
+                # ГРАММАТИКА
+                Button:
+                    on_release: root.manager.current = 'grammar_view'
+                    size_hint_y: None
+                    height: 110
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25]
+                    BoxLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: [20, 10]
+                        spacing: 20
+                        Image:
+                            source: 'grammar.png'
+                            size_hint_x: None
+                            width: 65
+                        BoxLayout:
+                            orientation: 'vertical'
+                            Label:
+                                text: "2. ГРАММАТИКА"
+                                bold: True
+                                color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                                halign: 'left'
+                                text_size: self.size
+                            Label:
+                                text: "Правила языка"
+                                color: (0.7, 0.7, 0.7, 1) if app.dark_mode else (0.4, 0.4, 0.4, 1)
+                                halign: 'left'
+                                text_size: self.size
+
+                # РЕЙТИНГ
+                Button:
+                    size_hint_y: None
+                    height: 110
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25]
+                    BoxLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: [20, 10]
+                        spacing: 20
+                        Image:
+                            source: 'rating.png'
+                            size_hint_x: None
+                            width: 65
+                        BoxLayout:
+                            orientation: 'vertical'
+                            Label:
+                                text: "3. РЕЙТИНГ"
+                                bold: True
+                                color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                                halign: 'left'
+                                text_size: self.size
+                            Label:
+                                text: "Узнайте свой ранг!"
+                                color: (0.7, 0.7, 0.7, 1) if app.dark_mode else (0.4, 0.4, 0.4, 1)
+                                halign: 'left'
+                                text_size: self.size
+
+                # НАСТРОЙКИ
+                Button:
+                    on_release: root.manager.current = 'settings'
+                    size_hint_y: None
+                    height: 110
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25]
+                    BoxLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: [20, 10]
+                        spacing: 20
+                        Image:
+                            source: 'settings.png'
+                            size_hint_x: None
+                            width: 65
+                        BoxLayout:
+                            orientation: 'vertical'
+                            Label:
+                                text: "4. НАСТРОЙКИ"
+                                bold: True
+                                color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                                halign: 'left'
+                                text_size: self.size
+                            Label:
+                                text: "Профиль и звук"
+                                color: (0.7, 0.7, 0.7, 1) if app.dark_mode else (0.4, 0.4, 0.4, 1)
+                                halign: 'left'
+                                text_size: self.size
+
+                # ПОМОЩЬ
+                Button:
+                    size_hint_y: None
+                    height: 110
+                    background_normal: ''
+                    background_color: 0,0,0,0
+                    on_release: root.manager.current = 'help_screen'
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25]
+                    BoxLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: [20, 10]
+                        spacing: 20
+                        Image:
+                            source: 'help.png'
+                            size_hint_x: None
+                            width: 65
+                        BoxLayout:
+                            orientation: 'vertical'
+                            Label:
+                                text: "5. ПОМОЩЬ"
+                                bold: True
+                                color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                                halign: 'left'
+                                text_size: self.size
+                            Label:
+                                text: "Вопросы и ответы"
+                                color: (0.7, 0.7, 0.7, 1) if app.dark_mode else (0.4, 0.4, 0.4, 1)
+                                halign: 'left'
+                                text_size: self.size
+
+<GrammarScreen>:
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [15, 20, 15, 15]
+        spacing: 15
+
+        Button:
+            text: "<- НАЗАД"
+            size_hint: None, None
+            size: (140, 50)
+            font_size: '18sp'
+            bold: True
+            color: (1, 1, 1, 1)
+            background_normal: ''
+            background_color: (0, 0, 0, 0)
+            on_release: root.manager.current = 'main_dashboard'
+            canvas.before:
+                Color:
+                    rgba: (0.05, 0.1, 0.3, 0.8) if app.dark_mode else (0.1, 0.2, 0.5, 0.8)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [25]
+
+        Label:
+            text: root.level_title
+            size_hint_y: None
+            height: 30
+            bold: True
+            font_size: '20sp'
+            color: (0.8, 0.8, 1, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+
+        ScrollView:
+            do_scroll_x: False
+            canvas.before:
+                Color:
+                    rgba: (0.2, 0.2, 0.2, 0.95) if app.dark_mode else (1, 1, 1, 0.95)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [15]
+            TextInput:
+                id: grammar_label
+                text: root.grammar_text
+                readonly: True
+                background_color: 0, 0, 0, 0
+                cursor_color: 0, 0, 0, 0
+                foreground_color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                font_size: '16sp'
+                size_hint_y: None
+                height: self.minimum_height 
+                padding: [20, 20]
+                multiline: True
+
+<SettingRow@BoxLayout>:
+    size_hint_y: None
+    height: 75
+    padding: [15, 10]
+    spacing: 15
+    icon_source: "" 
+    title: ""
+    # Делаем всю строку нажимаемой
+    on_touch_down: if self.collide_point(*args[1].pos) and root.title == "ПРОФИЛЬ": app.root.current = 'profile_screen'
+    
+    canvas.before:
+        Color:
+            rgba: (0.2, 0.2, 0.2, 0.9) if app.dark_mode else (1, 1, 1, 0.9)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]
+
+    Image:
+        source: root.icon_source
+        size_hint_x: None
+        width: 40
+        allow_stretch: True
+        keep_ratio: True
+    
+    Label:
+        text: root.title
+        color: (1, 1, 1, 1) if app.dark_mode else (0.1, 0.2, 0.4, 1)
+        font_size: '18sp'
+        bold: True
+        halign: 'left'
+        text_size: self.size
+        valign: 'middle'
+
+    # ТУТ ИСПРАВЛЕНИЕ: Кнопка ВКЛ/ВЫКЛ исчезнет, если это ПРОФИЛЬ
+    ToggleButton:
+        id: tg_btn
+        # Если это профиль, делаем кнопку невидимой и неактивной
+        opacity: 0 if root.title == "ПРОФИЛЬ" else 1
+        disabled: True if root.title == "ПРОФИЛЬ" else False
+        
+        text: "ВКЛ" if self.state == 'down' else "ВЫКЛ"
+        size_hint: None, None
+        size: (80, 40)
+        pos_hint: {'center_y': 0.5}
+        background_normal: ''
+        background_color: (0, 0, 0, 0)
+        state: 'down' if (root.title == "ТЕМНЫЙ РЕЖИМ" and app.dark_mode) else 'normal'
+        on_release:
+            if root.title == "ТЕМНЫЙ РЕЖИМ": app.toggle_night_mode()
+        canvas.before:
+            Color:
+                # Рисуем фон кнопки только если она видима
+                rgba: ((0.3, 0.6, 0.8, 1) if self.state == 'down' else (0.7, 0.7, 0.7, 1)) if root.title != "ПРОФИЛЬ" else (0,0,0,0)
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [20]               
+
+<SettingsScreen>:
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 20]
+        spacing: 20
+
+        Button:
+            size_hint: None, None
+            size: (130, 45)
+            background_normal: ''
+            background_color: (0, 0, 0, 0)
+            on_release: root.manager.current = 'main_dashboard'
+            canvas.before:
+                Color:
+                    rgba: (0.05, 0.1, 0.3, 0.8) if app.dark_mode else (0.1, 0.2, 0.5, 0.8)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+            BoxLayout:
+                pos: self.parent.pos
+                size: self.parent.size
+                padding: [10, 0]
+                spacing: 5
+                Image:
+                    source: "icon_back.png"
+                    size_hint_x: None
+                    width: 25
+                Label:
+                    text: "НАЗАД"
+                    bold: True
+
+        Label:
+            text: "НАСТРОЙКИ ПРОФИЛЯ"
+            font_size: '24sp'
+            bold: True
+            color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+            size_hint_y: None
+            height: 40
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 12
+                SettingRow:
+                    icon_source: "icon_profile.png"
+                    title: "ПРОФИЛЬ"
+                SettingRow:
+                    icon_source: "icon_notif.png"
+                    title: "УВЕДОМЛЕНИЯ"
+                SettingRow:
+                    icon_source: "icon_sound.png"
+                    title: "ЗВУК"
+                SettingRow:
+                    icon_source: "icon_vibration.png"
+                    title: "ВИБРАЦИЯ"
+                SettingRow:
+                    icon_source: "icon_dark.png"
+                    title: "ТЕМНЫЙ РЕЖИМ"
+
+                Button:
+                    size_hint_y: None
+                    height: 75
+                    on_release: root.manager.current = 'about_screen'
+                    background_normal: ''
+                    background_color: (0, 0, 0, 0)
+                    canvas.before:
+                        Color:
+                            rgba: (0.2, 0.2, 0.2, 0.9) if app.dark_mode else (1, 1, 1, 0.9)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [20]
+                    BoxLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: [15, 0]
+                        Image:
+                            source: "icon_info.png"
+                            size_hint_x: None
+                            width: 35
+                        Label:
+                            text: "О ПРОГРАММЕ"
+                            color: (1, 1, 1, 1) if app.dark_mode else (0.1, 0.2, 0.4, 1)
+                            bold: True
+                            halign: 'left'
+                            text_size: self.size
+                            valign: 'middle'
+
+<HelpScreen>:
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 30, 20, 20]
+        spacing: 15
+
+        Button:
+            text: "<- НАЗАД"
+            size_hint: None, None
+            size: (120, 45)
+            background_normal: ''
+            background_color: (0, 0, 0, 0)
+            on_release: root.manager.current = 'main_dashboard'
+            canvas.before:
+                Color:
+                    rgba: (0.05, 0.1, 0.3, 0.8) if app.dark_mode else (0.1, 0.2, 0.5, 0.8)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 250
+            spacing: 5
+            Image:
+                source: "hacker_logo.png"
+                size_hint: (None, None)
+                size: (180, 180)
+                pos_hint: {'center_x': 0.5}
+            Label:
+                text: "HACKER"
+                font_size: '36sp'
+                bold: True
+                color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+                halign: 'center'
+
+        Label:
+            text: "Обратитесь в службу поддержки, если у вас возникли вопросы:"
+            text_size: self.width - 60, None
+            halign: 'center'
+            size_hint_y: None
+            height: 60
+            color: (0.8, 0.8, 0.8, 1) if app.dark_mode else (0.1, 0.1, 0.1, 1)
+            bold: True
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 12
+            size_hint_y: None
+            height: 140
+            Button:
+                text: "hacker991cinema4d@mail.ru"
+                background_normal: ''
+                background_color: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 0.9)
+                color: (0.3, 0.6, 0.9, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+                size_hint_y: None
+                height: 55
+                on_release: import webbrowser; webbrowser.open('mailto:hacker991cinema4d@mail.ru')
+            Button:
+                text: "anbuhgconsult@gmail.com"
+                background_normal: ''
+                background_color: (0.2, 0.2, 0.2, 1) if app.dark_mode else (1, 1, 1, 0.9)
+                color: (0.3, 0.6, 0.9, 1) if app.dark_mode else (0.1, 0.2, 0.5, 1)
+                size_hint_y: None
+                height: 55
+                on_release: import webbrowser; webbrowser.open('mailto:anbuhgconsult@gmail.com')
+
+        Widget:
+            size_hint_y: 1 
+
+
+
+<AboutScreen>:
+    canvas.before:
+        # Фон меняется: градиент в дневном режиме, темно-серый в ночном
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            texture: root.bg_texture if not app.dark_mode else None
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (0, 0, 0, 0)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 20]
+        spacing: 20
+
+        # КНОПКА НАЗАД (Точная копия твоей кнопки из настроек)
+        Button:
+            size_hint: None, None
+            size: (130, 45)
+            background_normal: ''
+            background_color: (0, 0, 0, 0)
+            on_release: root.manager.current = 'settings'
+            canvas.before:
+                Color:
+                    rgba: (0.05, 0.1, 0.3, 0.8) if app.dark_mode else (0.1, 0.2, 0.5, 0.8)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+            
+            BoxLayout:
+                pos: self.parent.pos
+                size: self.parent.size
+                padding: [10, 0]
+                spacing: 5
+                Image:
+                    source: "icon_back.png"
+                    size_hint_x: None
+                    width: 25
+                Label:
+                    text: "НАЗАД"
+                    bold: True
+
+        # ЗАГОЛОВОК
+        Label:
+            text: "О ПРОГРАММЕ"
+            font_size: '24sp'
+            bold: True
+            color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+            size_hint_y: None
+            height: 40
+
+        # ТЕКСТОВАЯ ОБЛАСТЬ (С прокруткой)
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: [10, 10]
+                
+                Label:
+                    text: root.about_text
+                    markup: True  # ЭТО ОБЯЗАТЕЛЬНО ДЛЯ ЖИРНОГО ШРИФТА
+                    font_size: '16sp'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    halign: 'center'
+                    # Цвет подстраивается под тему
+                    color: (1, 1, 1, 1) if app.dark_mode else (0.2, 0.2, 0.2, 1)
+
+<ProfileScreen>:
+    canvas.before:
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            texture: root.bg_texture if not app.dark_mode else None
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1) if app.dark_mode else (0, 0, 0, 0)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 10, 20, 10]
+        spacing: 5
+
+        # Кнопка НАЗАД
+        Button:
+            size_hint: None, None
+            size: (100, 35)
+            background_normal: ''
+            background_color: (0, 0, 0, 0)
+            on_release: root.manager.current = 'settings'
+            canvas.before:
+                Color:
+                    rgba: (0.05, 0.1, 0.3, 0.8) if app.dark_mode else (0.1, 0.2, 0.5, 0.8)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10]
+            Label:
+                text: "назад"
+                pos: self.parent.pos
+                size: self.parent.size
+                bold: True
+
+        Image:
+            source: "icon_profile.png"
+            size_hint: None, None
+            size: (60, 60)
+            pos_hint: {'center_x': 0.5}
+
+        # Данные пользователя
+        Label:
+            text: root.user_full_name
+            font_size: '18sp'
+            bold: True
+            size_hint_y: None
+            height: 25
+            color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+
+        Label:
+            text: root.user_birth_year
+            font_size: '14sp'
+            size_hint_y: None
+            height: 20
+            color: (0.5, 0.5, 0.5, 1)
+
+        # --- БЛОК СМЕНЫ ДАННЫХ ---
+        TextInput:
+            id: name_input
+            hint_text: "Новое имя..."
+            multiline: False
+            size_hint: (0.8, None)
+            height: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0.2, 0.2, 0.2, 1) if app.dark_mode else (0.9, 0.9, 0.9, 1)
+            foreground_color: (1, 1, 1, 1) if app.dark_mode else (0, 0, 0, 1)
+
+        Label:
+            text: "НОВАЯ ДАТА РОЖДЕНИЯ:"
+            font_size: '11sp'
+            size_hint_y: None
+            height: 15
+            color: (0.4, 0.7, 1, 1)
+
+        # ТРИ БАРАБАНА С ОГРАНИЧЕНИЕМ ВИДИМОСТИ
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (0.9, None)
+            height: 90
+            pos_hint: {'center_x': 0.5}
+            spacing: 2
+            canvas.before:
+                Color:
+                    rgba: (1, 1, 1, 0.05)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [5]
+
+            # ДЕНЬ
+            ScrollView:
+                id: d_scroll
+                bar_width: 0
+                GridLayout:
+                    id: d_cont
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            # МЕСЯЦ
+            ScrollView:
+                id: m_scroll
+                bar_width: 0
+                GridLayout:
+                    id: m_cont
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            # ГОД
+            ScrollView:
+                id: y_scroll
+                bar_width: 0
+                GridLayout:
+                    id: y_cont
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+
+        Button:
+            text: "СОХРАНИТЬ ИЗМЕНЕНИЯ"
+            size_hint: (0.7, None)
+            height: 40
+            pos_hint: {'center_x': 0.5}
+            background_normal: ''
+            background_color: (0.1, 0.5, 0.2, 1) # Сделал зеленым для акцента
+            on_release: root.update_profile_data()
+
+        # --- БЛОК СМЕНЫ УРОВНЯ ---
+        Label:
+            text: root.user_level_status
+            font_size: '14sp'
+            color: (0.2, 0.6, 1, 1)
+            size_hint_y: None
+            height: 20
+
+        BoxLayout:
+            orientation: 'horizontal' # Сделал в ряд, чтобы сэкономить место
+            spacing: 5
+            size_hint_y: None
+            height: 40
+            padding: [10, 0, 10, 0]
+
+            Button:
+                text: "ЛЕГКИЙ"
+                background_color: (0.2, 0.7, 0.3, 0.6)
+                on_release: root.update_level("Easy")
+            
+            Button:
+                text: "СРЕДНИЙ"
+                background_color: (0.8, 0.5, 0.1, 0.6)
+                on_release: root.update_level("Medium")
+            
+            Button:
+                text: "ТРУДНЫЙ"
+                background_color: (0.8, 0.2, 0.2, 0.6)
+                on_release: root.update_level("Hard")
+
+        Widget:
+            size_hint_y: 1
+<LevelMapScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1) if not app.dark_mode else (0.05, 0.06, 0.08, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: root.bg_texture if not app.dark_mode else None
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        # ШАПКА
+        BoxLayout:
+            size_hint_y: None
+            height: 110
+            padding: [20, 10, 20, 10]
+            spacing: 20
+            canvas.before:
+                Color:
+                    rgba: (0.08, 0.15, 0.3, 1) if not app.dark_mode else (0.1, 0.12, 0.15, 1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            
+            Button:
+                text: "<"
+                size_hint: (None, None)
+                size: (48, 48)
+                pos_hint: {'center_y': 0.5}
+                background_normal: ''
+                background_color: (0.1, 0.45, 0.85, 1)
+                on_release: root.manager.current = 'main_dashboard'
+
+            Image:
+                source: 'assets/images/header_icon.jpg'
+                size_hint: (None, None)
+                size: (70, 70)
+                pos_hint: {'center_y': 0.5}
+
+            Label:
+                text: app.user_name.upper()
+                font_size: '22sp'
+                bold: True
+                color: (1, 1, 1, 1)
+                halign: 'left'
+                text_size: self.size
+                valign: 'middle'
+
+        Label:
+            size_hint_y: None
+            height: 60
+            text: "Путь Мастерства: " + root.level_title.upper()
+            font_size: '20sp'
+            bold: True
+            color: (0.1, 0.1, 0.2, 1) if not app.dark_mode else (0.8, 0.9, 1, 1)
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            bar_width: 6
+            scroll_type: ['bars', 'content']
+            
+            GridLayout:
+                id: map_container
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height  # Это свойство заставляет сетку расти вниз
+                spacing: 0
+                padding: [0, 10, 0, 150]

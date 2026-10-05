@@ -1,0 +1,187 @@
+<ExerciseScreen>:
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.12, 0.15, 1) if app.dark_mode else (0.95, 0.97, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [12, 10]
+        spacing: 10
+
+        # --- ШАПКА ---
+        BoxLayout:
+            size_hint_y: None
+            height: 45
+            spacing: 10
+            Image:
+                source: 'assets/user_icon.png'
+                size_hint_x: None
+                width: 35
+            Label:
+                text: app.user_name.upper()
+                bold: True
+                color: (1, 1, 1, 1) if app.dark_mode else (0.1, 0.2, 0.4, 1)
+                halign: 'left'
+                text_size: self.size
+            Button:
+                text: "ПОМОЩЬ"
+                size_hint_x: None
+                width: 85
+                background_normal: ''
+                background_color: (0.9, 0.5, 0.1, 1)
+                bold: True
+                on_release: root.show_step_help()
+
+        # --- ПЛАШКА С ПОДСКАЗКОЙ ---
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            padding: [10, 5]
+            canvas.before:
+                Color:
+                    rgba: (0.2, 0.25, 0.35, 1) if app.dark_mode else (0.88, 0.92, 0.95, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10]
+            Label:
+                text: root.grammar_hint
+                font_size: '15sp'
+                italic: True
+                bold: True
+                color: (1, 0.8, 0.2, 1) if app.dark_mode else (0.1, 0.3, 0.5, 1)
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+
+        # --- КАРТОЧКА ---
+        AnchorLayout:
+            size_hint_y: 5
+            canvas.before:
+                Color:
+                    rgba: (0.15, 0.2, 0.3, 1) if app.dark_mode else (1, 1, 1, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [15]
+            
+            Image:
+                source: root.image_source
+                opacity: 1 if (root.display_mode in ["lesson", "rebus"] and root.image_source != "") else 0
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: (0.9, 0.9)
+
+            Label:
+                text: root.question_text
+                opacity: 1 if root.display_mode == "dictation" else 0
+                markup: True
+                on_ref_press: root.on_ref_press(*args)
+                color: (1, 1, 1, 1) if app.dark_mode else (0.1, 0.2, 0.3, 1)
+                font_size: '18sp'
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.width - 40, self.height - 20
+
+        # --- НИЖНЯЯ ЧАСТЬ ---
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: 8
+
+            TextInput:
+                id: ans_input
+                opacity: 1 if root.display_mode in ["rebus", "dictation"] else 0
+                disabled: False if root.display_mode in ["rebus", "dictation"] else True
+                size_hint_y: None
+                height: 45 if root.display_mode in ["rebus", "dictation"] else 0
+                hint_text: "Введите букву..."
+                multiline: False
+                on_text_validate: root.check_answer()
+
+            # --- ПРОГРЕСС 1-5 ---
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+                spacing: 8
+                padding: [10, 0]
+                
+                # Создаем блоки для 1-5
+                # Используем прямой доступ к словарю root.step_results["1"]
+                
+                RelativeLayout:
+                    Button:
+                        text: "1" if root.step_results["1"] is None else ""
+                        background_normal: ''
+                        background_color: (0.1, 0.2, 0.4, 1)
+                    Image:
+                        source: 'assets/correct.jpg' if root.step_results["1"] == True else 'assets/incorrect.jpg'
+                        opacity: 1 if root.step_results["1"] is not None else 0
+                        size_hint: (0.8, 0.8)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                RelativeLayout:
+                    Button:
+                        text: "2" if root.step_results["2"] is None else ""
+                        background_normal: ''
+                        background_color: (0.1, 0.2, 0.4, 1)
+                    Image:
+                        source: 'assets/correct.jpg' if root.step_results["2"] == True else 'assets/incorrect.jpg'
+                        opacity: 1 if root.step_results["2"] is not None else 0
+                        size_hint: (0.8, 0.8)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                RelativeLayout:
+                    Button:
+                        text: "3" if root.step_results["3"] is None else ""
+                        background_normal: ''
+                        background_color: (0.1, 0.2, 0.4, 1)
+                    Image:
+                        source: 'assets/correct.jpg' if root.step_results["3"] == True else 'assets/incorrect.jpg'
+                        opacity: 1 if root.step_results["3"] is not None else 0
+                        size_hint: (0.8, 0.8)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                RelativeLayout:
+                    Button:
+                        text: "4" if root.step_results["4"] is None else ""
+                        background_normal: ''
+                        background_color: (0.1, 0.2, 0.4, 1)
+                    Image:
+                        source: 'assets/correct.jpg' if root.step_results["4"] == True else 'assets/incorrect.jpg'
+                        opacity: 1 if root.step_results["4"] is not None else 0
+                        size_hint: (0.8, 0.8)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                RelativeLayout:
+                    Button:
+                        text: "5" if root.step_results["5"] is None else ""
+                        background_normal: ''
+                        background_color: (0.1, 0.2, 0.4, 1)
+                    Image:
+                        source: 'assets/correct.jpg' if root.step_results["5"] == True else 'assets/incorrect.jpg'
+                        opacity: 1 if root.step_results["5"] is not None else 0
+                        size_hint: (0.8, 0.8)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            Button:
+                text: "ДАЛЕЕ" if root.display_mode == "lesson" else "ПРОВЕРИТЬ"
+                size_hint_y: None
+                height: 50
+                background_normal: ''
+                background_color: (0.2, 0.6, 0.3, 1)
+                bold: True
+                on_release: root.check_answer()
+
+            Button:
+                text: "ВЫХОД"
+                size_hint_y: None
+                height: 30
+                background_color: (0,0,0,0)
+                color: (0.6, 0.6, 0.6, 1)
+                on_release: root.go_back()
