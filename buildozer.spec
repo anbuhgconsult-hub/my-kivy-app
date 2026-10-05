@@ -29,6 +29,8 @@ android.api = 33
 
 # (int) Minimum API required
 android.minapi = 21
+# (str) Android NDK version to use
+android.ndk = 25b
 
 # (str) Supported orientations
 orientation = portrait
